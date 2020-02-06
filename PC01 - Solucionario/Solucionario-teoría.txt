@@ -1,0 +1,56 @@
+1) Explique con sus palabras ¿Qué es un proceso de una computadora?
+
+- Es la ejecución de diversas instrucciones de un programa, realizados por el microprocesador.
+
+
+2) Explique a qué se refieren cuando hablamos de comunicación punto a punto entre 2 procesos, proponer un ejemplo en código.
+
+- Es cuando sobre un canal de comunicaciones se establece el envío de datos solo entre un emisor y receptor.
+
+int main(int argc, char *argv[]) {
+	int cantProcesos, procActual, destino;
+	char msjEnviado, msjRecibido;
+	MPI_Status estado;
+	MPI_Init(&argc,&argv);
+	MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
+	if (procActual == 0) {
+	   msjEnviado='r';
+	   destino = 1;
+	   printf("Soy el proceso %d y envio msje al proceso %d la letra %c", my_rank, destino, msjeEnviado);
+	   MPI_Send(&msjEnviado, 1, MPI_CHAR, destino, 1, MPI_COMM_WORLD);
+	}
+	else{
+	   origen=0;
+	   MPI_Recv(&msjRecibido, 1, MPI_CHAR, 0, 1, MPI_COMM_WORLD, &estado);
+	   printf("Soy el proceso %d y recibo como msje la letra %c del proceso 0", my_rank, msjeRecibido);
+	}
+	MPI_Finalize();
+}
+
+
+
+3) ¿Qué es una memoria RAM (principal), Caché y Virtual? e indicar cómo funcionan.
+
+- Memoria RAM: Es un tipo de memoria operativa donde se cargan todas las instrucciones que ejecuta el procesador y otras unidades del computador.
+
+Memoria Caché: Guarda datos para que las solicitudes futuras de esos datos se puedan atender con mayor rapidez, sin tener que rastrearlos a su lugar de origen cada vez que sean necesarios.
+
+Memoria Virtual: Es una técnica de gestión de la memoria que mueve datos desde la memoria RAM a un espacio del disco duro de forma temporal llamado archivo de paginación. 
+
+
+4) ¿En qué consiste la programación en Memoria Distribuida y la programación en Memoria Compartida?
+
+- P. Memoria Distribuida: Cada procesador tiene su propia memoria y la comunicación se realiza por intercambio explícito de mensajes a través de una red.
+
+P. Memoria Compartida: Todos los procesadores acceden a una memoria común y la comunicación de ellos se hace a través de la memoria.
+
+
+5) Describa en 3 líneas como máximo e indicar los parámetros de los siguientes comandos del MPI.
+
+MPI_Send(msg_buf_p, msg_size, msg_type, dest, tag, communicator): Envía msjes a otro procesos.
+
+MPI_Recv(msg_buf_p, buf_size, buf_type, source, tag, communicator, status): Recibe msjes de otro proceso.
+
+MPI_Reduce(input_data_p, output_data_p, count, datatype, operator, dest_process, comm): Realiza operaciones con el valor que se le envía al proceso destino.
+
+MPI_Allreduce(input_data_p, output_data_p, count, datatype, operator, comm): Realiza la misma función del Reduce, pero en este caso retorna el valor reducido a los procesos que llamaron a la función reduce.
